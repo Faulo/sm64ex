@@ -1,5 +1,7 @@
 #include <PR/ultratypes.h>
 
+#include "sm64ap.h"
+
 #include "prevent_bss_reordering.h"
 #include "sm64.h"
 #include "area.h"
@@ -535,6 +537,8 @@ s32 act_reading_sign(struct MarioState *m) {
             if (gCamera->cutscene == 0) {
                 disable_time_stop();
                 set_mario_action(m, ACT_IDLE, 0);
+                // TODO: Send more specific checks here
+                SM64AP_SendItem(SM64AP_MOVE_PUNCH);
             }
             break;
     }

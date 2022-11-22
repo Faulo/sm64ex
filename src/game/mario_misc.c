@@ -1,5 +1,7 @@
 #include <PR/ultratypes.h>
 
+#include "sm64ap.h"
+
 #include "sm64.h"
 #include "area.h"
 #include "audio/external.h"
@@ -140,6 +142,10 @@ static void toad_message_talking(void) {
             case TOAD_STAR_3_DIALOG:
                 gCurrentObject->oToadMessageDialogId = TOAD_STAR_3_DIALOG_AFTER;
                 bhv_spawn_star_no_level_exit(2);
+                break;
+            default:
+                // TODO: Send more specific checks here
+                SM64AP_SendItem(SM64AP_MOVE_JUMP);
                 break;
         }
     }
