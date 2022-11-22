@@ -81,3 +81,8 @@ sm64config.txt
 
 # macOS bullcrap directory settings file thats autocreated
 .DS_Store
+
+# Visual Studio
+.vs/
+x64/
+Debug/
