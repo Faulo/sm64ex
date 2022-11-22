@@ -296,7 +296,7 @@ void SM64AP_ResetItems() {
 
     // SMR
     sm64_move_jump = SM64AP_MOVE_JUMP_BASIC;
-    sm64_move_punch = SM64AP_MOVE_PUNCH_NONE;
+    sm64_move_punch = SM64AP_MOVE_PUNCH_JUMPKICK;
     sm64_move_sideflip = false;
     sm64_move_wallkick = false;
     sm64_move_longjump = false;

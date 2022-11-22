@@ -446,7 +446,7 @@ s32 act_jump(struct MarioState *m) {
         return TRUE;
     }
 
-    if (m->input & INPUT_Z_PRESSED) {
+    if (m->input & INPUT_Z_PRESSED && SM64AP_CanDoAction(ACT_GROUND_POUND)) {
         return set_mario_action(m, ACT_GROUND_POUND, 0);
     }
 
@@ -465,7 +465,7 @@ s32 act_double_jump(struct MarioState *m) {
         return TRUE;
     }
 
-    if (m->input & INPUT_Z_PRESSED) {
+    if (m->input & INPUT_Z_PRESSED && SM64AP_CanDoAction(ACT_GROUND_POUND)) {
         return set_mario_action(m, ACT_GROUND_POUND, 0);
     }
 
@@ -484,7 +484,7 @@ s32 act_triple_jump(struct MarioState *m) {
         return set_mario_action(m, ACT_DIVE, 0);
     }
 
-    if (m->input & INPUT_Z_PRESSED) {
+    if (m->input & INPUT_Z_PRESSED && SM64AP_CanDoAction(ACT_GROUND_POUND)) {
         return set_mario_action(m, ACT_GROUND_POUND, 0);
     }
 
@@ -503,7 +503,7 @@ s32 act_triple_jump(struct MarioState *m) {
 }
 
 s32 act_backflip(struct MarioState *m) {
-    if (m->input & INPUT_Z_PRESSED) {
+    if (m->input & INPUT_Z_PRESSED && SM64AP_CanDoAction(ACT_GROUND_POUND)) {
         return set_mario_action(m, ACT_GROUND_POUND, 0);
     }
 
@@ -524,7 +524,7 @@ s32 act_freefall(struct MarioState *m) {
         return set_mario_action(m, ACT_DIVE, 0);
     }
 
-    if (m->input & INPUT_Z_PRESSED) {
+    if (m->input & INPUT_Z_PRESSED && SM64AP_CanDoAction(ACT_GROUND_POUND)) {
         return set_mario_action(m, ACT_GROUND_POUND, 0);
     }
 
@@ -553,7 +553,7 @@ s32 act_hold_jump(struct MarioState *m) {
         return set_mario_action(m, ACT_AIR_THROW, 0);
     }
 
-    if (m->input & INPUT_Z_PRESSED) {
+    if (m->input & INPUT_Z_PRESSED && SM64AP_CanDoAction(ACT_GROUND_POUND)) {
         return drop_and_set_mario_action(m, ACT_GROUND_POUND, 0);
     }
 
@@ -579,7 +579,7 @@ s32 act_hold_freefall(struct MarioState *m) {
         return set_mario_action(m, ACT_AIR_THROW, 0);
     }
 
-    if (m->input & INPUT_Z_PRESSED) {
+    if (m->input & INPUT_Z_PRESSED && SM64AP_CanDoAction(ACT_GROUND_POUND)) {
         return drop_and_set_mario_action(m, ACT_GROUND_POUND, 0);
     }
 
@@ -592,7 +592,7 @@ s32 act_side_flip(struct MarioState *m) {
         return set_mario_action(m, ACT_DIVE, 0);
     }
 
-    if (m->input & INPUT_Z_PRESSED) {
+    if (m->input & INPUT_Z_PRESSED && SM64AP_CanDoAction(ACT_GROUND_POUND)) {
         return set_mario_action(m, ACT_GROUND_POUND, 0);
     }
 
@@ -615,7 +615,7 @@ s32 act_wall_kick_air(struct MarioState *m) {
         return set_mario_action(m, ACT_DIVE, 0);
     }
 
-    if (m->input & INPUT_Z_PRESSED) {
+    if (m->input & INPUT_Z_PRESSED && SM64AP_CanDoAction(ACT_GROUND_POUND)) {
         return set_mario_action(m, ACT_GROUND_POUND, 0);
     }
 
@@ -1719,7 +1719,7 @@ s32 act_shot_from_cannon(struct MarioState *m) {
 s32 act_flying(struct MarioState *m) {
     s16 startPitch = m->faceAngle[0];
 
-    if (m->input & INPUT_Z_PRESSED) {
+    if (m->input & INPUT_Z_PRESSED && SM64AP_CanDoAction(ACT_GROUND_POUND)) {
         if (m->area->camera->mode == CAMERA_MODE_BEHIND_MARIO) {
 #ifndef BETTERCAMERA
             set_camera_mode(m->area->camera, m->area->camera->defMode, 1);
@@ -1932,14 +1932,11 @@ s32 act_flying_triple_jump(struct MarioState *m) {
             }
 #endif
         }
-        if (m->input & INPUT_B_PRESSED) {
-            if (SM64AP_CanDoAction(ACT_DIVE)) {
-                return set_mario_action(m, ACT_DIVE, 0);
-            }
-        } else {
-            if (SM64AP_CanDoAction(ACT_GROUND_POUND)) {
-                return set_mario_action(m, ACT_GROUND_POUND, 0);
-            }
+        if (m->input & INPUT_B_PRESSED && SM64AP_CanDoAction(ACT_DIVE)) {
+            return set_mario_action(m, ACT_DIVE, 0);
+        }
+        if (m->input & INPUT_Z_PRESSED && SM64AP_CanDoAction(ACT_GROUND_POUND)) {
+            return set_mario_action(m, ACT_GROUND_POUND, 0);
         }
     }
 #else
@@ -2067,7 +2064,7 @@ s32 act_special_triple_jump(struct MarioState *m) {
         return set_mario_action(m, ACT_DIVE, 0);
     }
 
-    if (m->input & INPUT_Z_PRESSED) {
+    if (m->input & INPUT_Z_PRESSED && SM64AP_CanDoAction(ACT_GROUND_POUND)) {
         return set_mario_action(m, ACT_GROUND_POUND, 0);
     }
 
