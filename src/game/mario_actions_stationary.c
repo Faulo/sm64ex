@@ -563,7 +563,7 @@ s32 act_crouching(struct MarioState *m) {
         return set_mario_action(m, ACT_START_CRAWLING, 0);
     }
 
-    if (m->input & INPUT_B_PRESSED && SM64AP_CanDoAction(ACT_PUNCHING)) {
+    if (m->input & INPUT_B_PRESSED && SM64AP_CanDoAction(ACT_SLIDE_KICK)) {
         return set_mario_action(m, ACT_PUNCHING, 9);
     }
 
