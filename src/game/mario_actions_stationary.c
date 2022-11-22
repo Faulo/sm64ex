@@ -30,7 +30,7 @@ s32 check_common_idle_cancels(struct MarioState *m) {
         return set_mario_action(m, ACT_SHOCKWAVE_BOUNCE, 0);
     }
 
-    if (m->input & INPUT_A_PRESSED) {
+    if (m->input & INPUT_A_PRESSED && SM64AP_CanDoAction(ACT_JUMP)) {
         return set_jumping_action(m, ACT_JUMP, 0);
     }
 
@@ -77,7 +77,7 @@ s32 check_common_hold_idle_cancels(struct MarioState *m) {
         return drop_and_set_mario_action(m, ACT_SHOCKWAVE_BOUNCE, 0);
     }
 
-    if (m->input & INPUT_A_PRESSED) {
+    if (m->input & INPUT_A_PRESSED && SM64AP_CanDoAction(ACT_HOLD_JUMP)) {
         return set_jumping_action(m, ACT_HOLD_JUMP, 0);
     }
 
@@ -852,9 +852,13 @@ s32 check_common_landing_cancels(struct MarioState *m, u32 action) {
 
     if (m->input & INPUT_A_PRESSED) {
         if (!action) {
-            return set_jump_from_landing(m);
+            if (SM64AP_CanDoAction(ACT_JUMP)) {
+                return set_jump_from_landing(m);
+            }
         } else {
-            return set_jumping_action(m, action, 0);
+            if (SM64AP_CanDoAction(action)) {
+                return set_jumping_action(m, action, 0);
+            }
         }
     }
 

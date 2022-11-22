@@ -284,7 +284,7 @@ s32 act_top_of_pole_transition(struct MarioState *m) {
 s32 act_top_of_pole(struct MarioState *m) {
     UNUSED struct Object *marioObj = m->marioObj;
 
-    if (m->input & INPUT_A_PRESSED) {
+    if (m->input & INPUT_A_PRESSED && SM64AP_CanDoAction(ACT_TOP_OF_POLE_JUMP)) {
         return set_mario_action(m, ACT_TOP_OF_POLE_JUMP, 0);
     }
     if (m->controller->stickY < -16.0f) {

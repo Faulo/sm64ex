@@ -1125,7 +1125,7 @@ s32 hurt_and_set_mario_action(struct MarioState *m, u32 action, u32 actionArg, s
  * actions. A common variant of the below function.
  */
 s32 check_common_action_exits(struct MarioState *m) {
-    if (m->input & INPUT_A_PRESSED) {
+    if (m->input & INPUT_A_PRESSED && SM64AP_CanDoAction(ACT_JUMP)) {
         return set_mario_action(m, ACT_JUMP, 0);
     }
     if (m->input & INPUT_OFF_FLOOR) {
@@ -1146,7 +1146,7 @@ s32 check_common_action_exits(struct MarioState *m) {
  * object holding actions. A holding variant of the above function.
  */
 s32 check_common_hold_action_exits(struct MarioState *m) {
-    if (m->input & INPUT_A_PRESSED) {
+    if (m->input & INPUT_A_PRESSED && SM64AP_CanDoAction(ACT_HOLD_JUMP)) {
         return set_mario_action(m, ACT_HOLD_JUMP, 0);
     }
     if (m->input & INPUT_OFF_FLOOR) {

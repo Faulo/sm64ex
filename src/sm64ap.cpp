@@ -490,6 +490,12 @@ bool SM64AP_CanDoAction(int action) {
         case ACT_DIVE:
             return sm64_move_punch >= SM64AP_MOVE_PUNCH_DIVE;
         case ACT_JUMP:
+        case ACT_HOLD_JUMP:
+        case ACT_BURNING_JUMP:
+        case ACT_RIDING_SHELL_JUMP:
+        case ACT_TOP_OF_POLE_JUMP:
+        case ACT_METAL_WATER_JUMP:
+        case ACT_HOLD_METAL_WATER_JUMP:
             return sm64_move_jump >= SM64AP_MOVE_JUMP_BASIC;
         case ACT_DOUBLE_JUMP:
             return sm64_move_jump >= SM64AP_MOVE_JUMP_DOUBLE;
