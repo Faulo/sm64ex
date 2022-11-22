@@ -25,14 +25,14 @@ bool sm64_have_metalcap = false;
 bool sm64_have_vanishcap = false;
 
 // SMR
-int sm64_move_jump = SM64AP_MOVE_JUMP_BASIC;
-int sm64_move_punch = SM64AP_MOVE_PUNCH_NONE;
-bool sm64_move_sideflip = false;
-bool sm64_move_wallkick = false;
-bool sm64_move_longjump = false;
-bool sm64_move_backflip = false;
-bool sm64_move_groundpound = false;
-bool sm64_move_slidekick = false;
+int sm64_move_jump = SM64AP_INITIAL_JUMP;
+int sm64_move_punch = SM64AP_INITIAL_PUNCH;
+bool sm64_move_sideflip = SM64AP_INITIAL_SIDEFLIP;
+bool sm64_move_wallkick = SM64AP_INITIAL_WALLKICK;
+bool sm64_move_longjump = SM64AP_INITIAL_LONGJUMP;
+bool sm64_move_backflip = SM64AP_INITIAL_BACKFLIP;
+bool sm64_move_groundpound = SM64AP_INITIAL_GROUNDPOUND;
+bool sm64_move_slidekick = SM64AP_INITIAL_SLIDEKICK;
 
 bool sm64_have_cannon[15];
 int* sm64_clockaction = nullptr;
@@ -295,14 +295,14 @@ void SM64AP_ResetItems() {
     starsCollected = 0;
 
     // SMR
-    sm64_move_jump = SM64AP_MOVE_JUMP_BASIC;
-    sm64_move_punch = SM64AP_MOVE_PUNCH_NONE;
-    sm64_move_sideflip = false;
-    sm64_move_wallkick = false;
-    sm64_move_longjump = false;
-    sm64_move_backflip = false;
-    sm64_move_groundpound = false;
-    sm64_move_slidekick = false;
+    sm64_move_jump = SM64AP_INITIAL_JUMP;
+    sm64_move_punch = SM64AP_INITIAL_PUNCH;
+    sm64_move_sideflip = SM64AP_INITIAL_SIDEFLIP;
+    sm64_move_wallkick = SM64AP_INITIAL_WALLKICK;
+    sm64_move_longjump = SM64AP_INITIAL_LONGJUMP;
+    sm64_move_backflip = SM64AP_INITIAL_BACKFLIP;
+    sm64_move_groundpound = SM64AP_INITIAL_GROUNDPOUND;
+    sm64_move_slidekick = SM64AP_INITIAL_SLIDEKICK;
 }
 
 void SM64AP_GenericInit() {
