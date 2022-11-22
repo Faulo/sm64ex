@@ -32,7 +32,7 @@ bool sm64_move_wallkick = false;
 bool sm64_move_longjump = false;
 bool sm64_move_backflip = false;
 bool sm64_move_groundpound = false;
-bool sm64_move_sweepkick = false;
+bool sm64_move_slidekick = false;
 
 bool sm64_have_cannon[15];
 int* sm64_clockaction = nullptr;
@@ -103,7 +103,7 @@ void SM64AP_RecvItem(int64_t idx, bool notify) {
             sm64_move_groundpound = true;
             break;
         case SM64AP_MOVE_SWEEPKICK:
-            sm64_move_sweepkick = true;
+            sm64_move_slidekick = true;
             break;
         case SM64AP_ID_CANNONUNLOCK(0) ... SM64AP_ID_CANNONUNLOCK(15-1):
             sm64_have_cannon[idx-SM64AP_ID_OFFSET-200] = true;
@@ -302,7 +302,7 @@ void SM64AP_ResetItems() {
     sm64_move_longjump = false;
     sm64_move_backflip = false;
     sm64_move_groundpound = false;
-    sm64_move_sweepkick = false;
+    sm64_move_slidekick = false;
 }
 
 void SM64AP_GenericInit() {
@@ -509,7 +509,7 @@ bool SM64AP_CanDoAction(int action) {
         case ACT_GROUND_POUND:
             return sm64_move_groundpound;
         case ACT_SLIDE_KICK:
-            return sm64_move_sweepkick;
+            return sm64_move_slidekick;
     }
     return true;
 }
