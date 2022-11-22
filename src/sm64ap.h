@@ -19,7 +19,7 @@ extern "C" {
 
 #define SM64AP_MOVE_JUMP (SM64AP_ITEMID_1UP + 1)
 #define SM64AP_MOVE_JUMP_NONE 0
-#define SM64AP_MOVE_JUMP_ONE 1
+#define SM64AP_MOVE_JUMP_BASIC 1
 #define SM64AP_MOVE_JUMP_DOUBLE 2
 #define SM64AP_MOVE_JUMP_TRIPLE 3
 #define SM64AP_MOVE_JUMP_SPECIAL 4
@@ -59,6 +59,7 @@ extern "C" bool SM64AP_HaveCannon(int);
 extern "C" bool SM64AP_DeathLinkPending();
 extern "C" void SM64AP_DeathLinkClear();
 extern "C" void SM64AP_DeathLinkSend();
+extern "C" bool SM64AP_CanDoAction(int action);
 
 // Send Item
 extern "C" void SM64AP_SendByBoxID(int);
@@ -86,6 +87,7 @@ bool SM64AP_HaveCannon(int);
 bool SM64AP_DeathLinkPending();
 void SM64AP_DeathLinkClear();
 void SM64AP_DeathLinkSend();
+bool SM64AP_CanDoAction(int action);
 void SM64AP_SendByBoxID(int);
 void SM64AP_SendItem(int);
 void SM64AP_PrintNext();

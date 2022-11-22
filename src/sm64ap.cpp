@@ -1,4 +1,5 @@
 #include "sm64ap.h"
+#include "sm64.h"
 #include "Archipelago.h"
 #include <cstdio>
 
@@ -24,14 +25,14 @@ bool sm64_have_metalcap = false;
 bool sm64_have_vanishcap = false;
 
 // SMR
-int sm64_move_jump = SM64AP_MOVE_JUMP_ONE;
+int sm64_move_jump = SM64AP_MOVE_JUMP_BASIC;
 int sm64_move_punch = SM64AP_MOVE_PUNCH_NONE;
-bool sm64_move_sidejump = false;
+bool sm64_move_sideflip = false;
 bool sm64_move_wallkick = false;
 bool sm64_move_longjump = false;
 bool sm64_move_backflip = false;
-bool sm64_have_groundpound = false;
-bool sm64_have_sweepkick = false;
+bool sm64_move_groundpound = false;
+bool sm64_move_sweepkick = false;
 
 bool sm64_have_cannon[15];
 int* sm64_clockaction = nullptr;
@@ -87,7 +88,7 @@ void SM64AP_RecvItem(int64_t idx, bool notify) {
             sm64_move_punch++;
             break;
         case SM64AP_MOVE_SIDEJUMP:
-            sm64_move_sidejump = true;
+            sm64_move_sideflip = true;
             break;
         case SM64AP_MOVE_WALLKICK:
             sm64_move_wallkick = true;
@@ -99,10 +100,10 @@ void SM64AP_RecvItem(int64_t idx, bool notify) {
             sm64_move_backflip = true;
             break;
         case SM64AP_MOVE_GROUNDPOUND:
-            sm64_have_groundpound = true;
+            sm64_move_groundpound = true;
             break;
         case SM64AP_MOVE_SWEEPKICK:
-            sm64_have_sweepkick = true;
+            sm64_move_sweepkick = true;
             break;
         case SM64AP_ID_CANNONUNLOCK(0) ... SM64AP_ID_CANNONUNLOCK(15-1):
             sm64_have_cannon[idx-SM64AP_ID_OFFSET-200] = true;
@@ -294,14 +295,14 @@ void SM64AP_ResetItems() {
     starsCollected = 0;
 
     // SMR
-    sm64_move_jump = SM64AP_MOVE_JUMP_ONE;
+    sm64_move_jump = SM64AP_MOVE_JUMP_BASIC;
     sm64_move_punch = SM64AP_MOVE_PUNCH_NONE;
-    sm64_move_sidejump = false;
+    sm64_move_sideflip = false;
     sm64_move_wallkick = false;
     sm64_move_longjump = false;
     sm64_move_backflip = false;
-    sm64_have_groundpound = false;
-    sm64_have_sweepkick = false;
+    sm64_move_groundpound = false;
+    sm64_move_sweepkick = false;
 }
 
 void SM64AP_GenericInit() {
@@ -458,7 +459,8 @@ bool SM64AP_HaveCap(int flag) {
 }
 
 bool SM64AP_HaveCannon(int courseIdx) {
-    if (courseIdx < 15) return sm64_have_cannon[courseIdx];
+    if (courseIdx < 15)
+        return sm64_have_cannon[courseIdx];
     return true;
 }
 
@@ -476,6 +478,40 @@ void SM64AP_DeathLinkSend() {
     } else {
         SM64AP_DeathLinkClear();
     }
+}
+
+bool SM64AP_CanDoAction(int action) {
+    switch (action) {
+        case ACT_PUNCHING:
+        case ACT_MOVE_PUNCHING:
+            return sm64_move_punch >= SM64AP_MOVE_PUNCH_BASIC;
+        case ACT_JUMP_KICK:
+            return sm64_move_punch >= SM64AP_MOVE_PUNCH_JUMPKICK;
+        case ACT_DIVE:
+            return sm64_move_punch >= SM64AP_MOVE_PUNCH_DIVE;
+        case ACT_JUMP:
+            return sm64_move_jump >= SM64AP_MOVE_JUMP_BASIC;
+        case ACT_DOUBLE_JUMP:
+            return sm64_move_jump >= SM64AP_MOVE_JUMP_DOUBLE;
+        case ACT_TRIPLE_JUMP:
+        case ACT_FLYING_TRIPLE_JUMP:
+            return sm64_move_jump >= SM64AP_MOVE_JUMP_TRIPLE;
+        case ACT_SPECIAL_TRIPLE_JUMP:
+            return sm64_move_jump >= SM64AP_MOVE_JUMP_SPECIAL;
+        case ACT_SIDE_FLIP:
+            return sm64_move_sideflip;
+        case ACT_BACKFLIP:
+            return sm64_move_backflip;
+        case ACT_WALL_KICK_AIR:
+            return sm64_move_wallkick;
+        case ACT_LONG_JUMP:
+            return sm64_move_longjump;
+        case ACT_GROUND_POUND:
+            return sm64_move_groundpound;
+        case ACT_SLIDE_KICK:
+            return sm64_move_sweepkick;
+    }
+    return true;
 }
 
 void SM64AP_PrintNext() {
