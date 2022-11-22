@@ -22,6 +22,17 @@ bool sm64_have_key2 = false;
 bool sm64_have_wingcap = false;
 bool sm64_have_metalcap = false;
 bool sm64_have_vanishcap = false;
+
+// SMR
+int sm64_move_jump = SM64AP_MOVE_JUMP_ONE;
+int sm64_move_punch = SM64AP_MOVE_PUNCH_NONE;
+bool sm64_move_sidejump = false;
+bool sm64_move_wallkick = false;
+bool sm64_move_longjump = false;
+bool sm64_move_backflip = false;
+bool sm64_have_groundpound = false;
+bool sm64_have_sweepkick = false;
+
 bool sm64_have_cannon[15];
 int* sm64_clockaction = nullptr;
 int sm64_cost_firstbowserdoor = 8;
@@ -68,6 +79,30 @@ void SM64AP_RecvItem(int64_t idx, bool notify) {
             break;
         case SM64AP_ITEMID_1UP:
             gMarioState->numLives++;
+            break;
+        case SM64AP_MOVE_JUMP:
+            sm64_move_jump++;
+            break;
+        case SM64AP_MOVE_PUNCH:
+            sm64_move_punch++;
+            break;
+        case SM64AP_MOVE_SIDEJUMP:
+            sm64_move_sidejump = true;
+            break;
+        case SM64AP_MOVE_WALLKICK:
+            sm64_move_wallkick = true;
+            break;
+        case SM64AP_MOVE_LONGJUMP:
+            sm64_move_longjump = true;
+            break;
+        case SM64AP_MOVE_BACKFLIP:
+            sm64_move_backflip = true;
+            break;
+        case SM64AP_MOVE_GROUNDPOUND:
+            sm64_have_groundpound = true;
+            break;
+        case SM64AP_MOVE_SWEEPKICK:
+            sm64_have_sweepkick = true;
             break;
         case SM64AP_ID_CANNONUNLOCK(0) ... SM64AP_ID_CANNONUNLOCK(15-1):
             sm64_have_cannon[idx-SM64AP_ID_OFFSET-200] = true;
@@ -257,6 +292,16 @@ void SM64AP_ResetItems() {
     sm64_have_metalcap = false;
     sm64_have_vanishcap = false;
     starsCollected = 0;
+
+    // SMR
+    sm64_move_jump = SM64AP_MOVE_JUMP_ONE;
+    sm64_move_punch = SM64AP_MOVE_PUNCH_NONE;
+    sm64_move_sidejump = false;
+    sm64_move_wallkick = false;
+    sm64_move_longjump = false;
+    sm64_move_backflip = false;
+    sm64_have_groundpound = false;
+    sm64_have_sweepkick = false;
 }
 
 void SM64AP_GenericInit() {
