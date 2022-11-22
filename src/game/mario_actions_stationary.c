@@ -539,7 +539,7 @@ s32 act_crouching(struct MarioState *m) {
         return set_mario_action(m, ACT_SHOCKWAVE_BOUNCE, 0);
     }
 
-    if (m->input & INPUT_A_PRESSED) {
+    if (m->input & INPUT_A_PRESSED && SM64AP_CanDoAction(ACT_BACKFLIP)) {
         return set_jumping_action(m, ACT_BACKFLIP, 0);
     }
 
@@ -708,7 +708,7 @@ s32 act_start_crouching(struct MarioState *m) {
         return set_mario_action(m, ACT_FREEFALL, 0);
     }
 
-    if (m->input & INPUT_A_PRESSED) {
+    if (m->input & INPUT_A_PRESSED && SM64AP_CanDoAction(ACT_BACKFLIP)) {
         return set_jumping_action(m, ACT_BACKFLIP, 0);
     }
 
@@ -733,7 +733,7 @@ s32 act_stop_crouching(struct MarioState *m) {
         return set_mario_action(m, ACT_FREEFALL, 0);
     }
 
-    if (m->input & INPUT_A_PRESSED) {
+    if (m->input & INPUT_A_PRESSED && SM64AP_CanDoAction(ACT_BACKFLIP)) {
         return set_jumping_action(m, ACT_BACKFLIP, 0);
     }
 
