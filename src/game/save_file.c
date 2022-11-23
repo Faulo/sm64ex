@@ -1,4 +1,5 @@
 #include <stdio.h>
+
 #include "sm64ap.h"
 
 #include <ultra64.h>
@@ -19,7 +20,7 @@
 #define MENU_DATA_MAGIC 0x4849
 #define SAVE_FILE_MAGIC 0x4441
 
-STATIC_ASSERT(sizeof(struct SaveBuffer) == EEPROM_SIZE, "eeprom buffer size must match");
+//STATIC_ASSERT(sizeof(struct SaveBuffer) == EEPROM_SIZE, "eeprom buffer size must match");
 
 extern struct SaveBuffer gSaveBuffer;
 
@@ -608,6 +609,26 @@ u32 save_file_get_flags(void) {
         return 0;
     }
     return gSaveBuffer.files[gCurrSaveFileNum - 1][0].flags;
+}
+
+void save_file_set_move(u32 action) {
+    u16 flag = 0;
+    gSaveBuffer.files[gCurrSaveFileNum - 1][0].moves |=  flag;
+    gSaveFileModified = TRUE;
+}
+
+void save_file_clear_move(u32 action) {
+    u16 flag = 0;
+    gSaveBuffer.files[gCurrSaveFileNum - 1][0].moves &= ~flag;
+    gSaveFileModified = TRUE;
+}
+
+bool save_file_get_move(u32 action) {
+    if (gCurrCreditsEntry != 0 || gCurrDemoInput != NULL) {
+        return true;
+    }
+    u16 flag = 0;
+    return gSaveBuffer.files[gCurrSaveFileNum - 1][0].moves & flag;
 }
 
 /**

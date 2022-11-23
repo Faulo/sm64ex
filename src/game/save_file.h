@@ -2,6 +2,7 @@
 #define SAVE_FILE_H
 
 #include <PR/ultratypes.h>
+#include <stdbool.h>
 
 #include "types.h"
 #include "area.h"
@@ -35,6 +36,8 @@ struct SaveFile
 
     u8 courseCoinScores[COURSE_STAGES_COUNT];
 
+    u16 moves;
+
     struct SaveBlockSignature signature;
 };
 
@@ -61,7 +64,7 @@ struct MainMenuSaveData
 #endif
 
     // Pad to match the EEPROM size of 0x200 (10 bytes on JP/US, 8 bytes on EU)
-    u8 filler[EEPROM_SIZE / 2 - SUBTRAHEND - NUM_SAVE_FILES * (4 + sizeof(struct SaveFile))];
+    //u8 filler[EEPROM_SIZE / 2 - SUBTRAHEND - NUM_SAVE_FILES * (4 + sizeof(struct SaveFile))];
 
     struct SaveBlockSignature signature;
 };
@@ -145,6 +148,10 @@ s32 save_file_get_cap_pos(Vec3s capPos);
 void save_file_set_sound_mode(u16 mode);
 u16 save_file_get_sound_mode(void);
 void save_file_move_cap_to_default_location(void);
+
+void save_file_set_move(u32 action);
+void save_file_clear_move(u32 action);
+bool save_file_get_move(u32 action);
 
 void disable_warp_checkpoint(void);
 void check_if_should_set_warp_checkpoint(struct WarpNode *warpNode);
