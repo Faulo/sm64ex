@@ -144,8 +144,11 @@ static void toad_message_talking(void) {
                 bhv_spawn_star_no_level_exit(2);
                 break;
             default:
-                // TODO: Send more specific checks here
-                SM64AP_SendItem(SM64AP_MOVE_JUMP);
+                // @TODO: Send more specific checks here
+                if (!save_file_get_move(ACT_JUMP)) {
+                    save_file_set_flags(ACT_JUMP);
+                    SM64AP_SendItem(SM64AP_MOVE_JUMP);
+                }
                 break;
         }
     }

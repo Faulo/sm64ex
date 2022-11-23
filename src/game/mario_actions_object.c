@@ -1,5 +1,7 @@
 #include <PR/ultratypes.h>
 
+#include "sm64ap.h"
+
 #include "sm64.h"
 #include "mario_actions_object.h"
 #include "types.h"

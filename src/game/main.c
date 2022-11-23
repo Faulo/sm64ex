@@ -1,8 +1,6 @@
 #include <ultra64.h>
 #include <stdio.h>
 
-#include "sm64ap.h"
-
 #include "sm64.h"
 #include "audio/external.h"
 #include "game_init.h"
