@@ -610,24 +610,53 @@ u32 save_file_get_flags(void) {
     return gSaveBuffer.files[gCurrSaveFileNum - 1][0].flags;
 }
 
+void save_file_set_move_mask(u16 moves) {
+    u8 high = moves >> 8;
+    u8 low = moves;
+
+    int fillerIndex = 2 * (gCurrSaveFileNum - 1);
+    gSaveBuffer.menuData[0].filler[fillerIndex] = high;
+    gSaveBuffer.menuData[0].filler[fillerIndex + 1] = low;
+    gSaveFileModified = TRUE;
+}
+u16 save_file_get_move_mask() {
+    int fillerIndex = 2 * (gCurrSaveFileNum - 1);
+    u16 high = gSaveBuffer.menuData[0].filler[fillerIndex];
+    u16 low = gSaveBuffer.menuData[0].filler[fillerIndex + 1];
+
+    return (high << 8) | low;
+}
+u16 save_file_get_action_flag(u32 action) {
+    switch (action) {
+        case ACT_JUMP:
+            return 1 << 0;
+        case ACT_DOUBLE_JUMP:
+            return 1 << 1;
+        case ACT_TRIPLE_JUMP:
+            return 1 << 2;
+    }
+    return 0;
+}
+
 void save_file_set_move(u32 action) {
-    u16 flag = 0;
-    gSaveBuffer.files[gCurrSaveFileNum - 1][0].moves |=  flag;
+    u16 moves = save_file_get_move_mask();
+    moves |= save_file_get_action_flag(action);
+    save_file_set_move_mask(moves);
     gSaveFileModified = TRUE;
 }
 
 void save_file_clear_move(u32 action) {
-    u16 flag = 0;
-    gSaveBuffer.files[gCurrSaveFileNum - 1][0].moves &= ~flag;
-    gSaveFileModified = TRUE;
+    u16 moves = save_file_get_move_mask();
+    moves &= ~save_file_get_action_flag(action);
+    save_file_set_move_mask(moves);
 }
 
 bool save_file_get_move(u32 action) {
     if (gCurrCreditsEntry != 0 || gCurrDemoInput != NULL) {
         return true;
     }
-    u16 flag = 0;
-    return gSaveBuffer.files[gCurrSaveFileNum - 1][0].moves & flag;
+    u16 moves = save_file_get_move_mask();
+    return (moves & save_file_get_action_flag(action)) != 0;
 }
 
 /**
