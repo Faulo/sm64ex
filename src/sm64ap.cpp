@@ -24,9 +24,13 @@ bool sm64_have_wingcap = false;
 bool sm64_have_metalcap = false;
 bool sm64_have_vanishcap = false;
 
-// SMR
-int sm64_move_jump = SM64AP_INITIAL_JUMP;
-int sm64_move_punch = SM64AP_INITIAL_PUNCH;
+// FMR
+bool sm64_move_basic_jump = SM64AP_INITIAL_BASIC_JUMP;
+bool sm64_move_double_jump = SM64AP_INITIAL_DOUBLE_JUMP;
+bool sm64_move_triple_jump = SM64AP_INITIAL_TRIPLE_JUMP;
+bool sm64_move_punch = SM64AP_INITIAL_PUNCH;
+bool sm64_move_kick = SM64AP_INITIAL_KICK;
+bool sm64_move_dive = SM64AP_INITIAL_DIVE;
 bool sm64_move_sideflip = SM64AP_INITIAL_SIDEFLIP;
 bool sm64_move_wallkick = SM64AP_INITIAL_WALLKICK;
 bool sm64_move_longjump = SM64AP_INITIAL_LONGJUMP;
@@ -294,9 +298,13 @@ void SM64AP_ResetItems() {
     sm64_have_vanishcap = false;
     starsCollected = 0;
 
-    // SMR
-    sm64_move_jump = SM64AP_INITIAL_JUMP;
+    // FMR
+    sm64_move_basic_jump = SM64AP_INITIAL_BASIC_JUMP;
+    sm64_move_double_jump = SM64AP_INITIAL_DOUBLE_JUMP;
+    sm64_move_triple_jump = SM64AP_INITIAL_TRIPLE_JUMP;
     sm64_move_punch = SM64AP_INITIAL_PUNCH;
+    sm64_move_kick = SM64AP_INITIAL_KICK;
+    sm64_move_dive = SM64AP_INITIAL_DIVE;
     sm64_move_sideflip = SM64AP_INITIAL_SIDEFLIP;
     sm64_move_wallkick = SM64AP_INITIAL_WALLKICK;
     sm64_move_longjump = SM64AP_INITIAL_LONGJUMP;
@@ -518,6 +526,44 @@ bool SM64AP_CanDoAction(int action) {
             return sm64_move_slidekick;
     }
     return true;
+}
+
+void SM64AP_UnlockAction(int action) {
+    switch (action) {
+        case ACT_PUNCHING:
+        case ACT_MOVE_PUNCHING:
+        case ACT_JUMP_KICK:
+        case ACT_DIVE:
+            sm64_move_punch++;
+            break;
+        case ACT_JUMP:
+        case ACT_HOLD_JUMP:
+        case ACT_BURNING_JUMP:
+        case ACT_RIDING_SHELL_JUMP:
+        case ACT_TOP_OF_POLE_JUMP:
+        case ACT_METAL_WATER_JUMP:
+        case ACT_HOLD_METAL_WATER_JUMP:
+            return sm64_move_jump >= SM64AP_MOVE_JUMP_BASIC;
+        case ACT_DOUBLE_JUMP:
+            return sm64_move_jump >= SM64AP_MOVE_JUMP_DOUBLE;
+        case ACT_TRIPLE_JUMP:
+        case ACT_FLYING_TRIPLE_JUMP:
+            return sm64_move_jump >= SM64AP_MOVE_JUMP_TRIPLE;
+        case ACT_SPECIAL_TRIPLE_JUMP:
+            return sm64_move_jump >= SM64AP_MOVE_JUMP_SPECIAL;
+        case ACT_SIDE_FLIP:
+            return sm64_move_sideflip;
+        case ACT_BACKFLIP:
+            return sm64_move_backflip;
+        case ACT_WALL_KICK_AIR:
+            return sm64_move_wallkick;
+        case ACT_LONG_JUMP:
+            return sm64_move_longjump;
+        case ACT_GROUND_POUND:
+            return sm64_move_groundpound;
+        case ACT_SLIDE_KICK:
+            return sm64_move_slidekick;
+    }
 }
 
 void SM64AP_PrintNext() {

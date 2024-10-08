@@ -540,7 +540,7 @@ s32 act_reading_sign(struct MarioState *m) {
 
                 // @TODO: Send more specific checks here
                 if (!save_file_get_move(ACT_PUNCHING)) {
-                    save_file_set_flags(ACT_PUNCHING);
+                    save_file_set_move(ACT_PUNCHING);
                     SM64AP_SendItem(SM64AP_MOVE_PUNCH);
                 }
             }

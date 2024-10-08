@@ -617,6 +617,8 @@ void save_file_set_move_mask(u16 moves) {
     int fillerIndex = 2 * (gCurrSaveFileNum - 1);
     gSaveBuffer.menuData[0].filler[fillerIndex] = high;
     gSaveBuffer.menuData[0].filler[fillerIndex + 1] = low;
+
+    gSaveBuffer.files[gCurrSaveFileNum - 1][0].flags |= SAVE_FLAG_FILE_EXISTS;
     gSaveFileModified = TRUE;
 }
 u16 save_file_get_move_mask() {

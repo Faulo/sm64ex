@@ -145,8 +145,19 @@ static void toad_message_talking(void) {
                 break;
             default:
                 // @TODO: Send more specific checks here
-                if (!save_file_get_move(ACT_JUMP)) {
-                    save_file_set_flags(ACT_JUMP);
+                if (save_file_get_move(ACT_JUMP)) {
+                    if (save_file_get_move(ACT_DOUBLE_JUMP)) {
+                        if (save_file_get_move(ACT_TRIPLE_JUMP)) {
+                        } else {
+                            save_file_set_move(ACT_TRIPLE_JUMP);
+                            SM64AP_SendItem(SM64AP_MOVE_JUMP);
+                        }
+                    } else {
+                        save_file_set_move(ACT_DOUBLE_JUMP);
+                        SM64AP_SendItem(SM64AP_MOVE_JUMP);
+                    }
+                } else {
+                    save_file_set_move(ACT_JUMP);
                     SM64AP_SendItem(SM64AP_MOVE_JUMP);
                 }
                 break;
